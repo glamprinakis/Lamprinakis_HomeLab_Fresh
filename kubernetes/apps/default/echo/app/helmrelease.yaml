@@ -33,6 +33,7 @@ spec:
               LOG_WITHOUT_NEWLINE: true
               LOG_IGNORE_PATH: /healthz
               PROMETHEUS_ENABLED: true
+              GITOPS_TEST: "GitOps webhook working! 🚀 Deployed at $(date)"
             probes:
               liveness: &probes
                 enabled: true
