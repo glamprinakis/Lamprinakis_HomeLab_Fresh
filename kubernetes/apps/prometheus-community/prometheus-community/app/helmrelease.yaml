@@ -3,13 +3,13 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: prometheus-community
+  name: kube-prometheus-stack
 spec:
   interval: 30m
   chart:
     spec:
-      chart: grafana
-      version: "8.5.2"
+      chart: kube-prometheus-stack
+      version: "65.1.1"
       sourceRef:
         kind: HelmRepository
         name: prometheus-community
@@ -21,81 +21,101 @@ spec:
     remediation:
       retries: 3
   values:
-    # Image configuration
-    image:
-      repository: grafana/grafana
-      tag: "11.2.0"
-      pullPolicy: IfNotPresent
+    # Prometheus configuration
+    prometheus:
+      enabled: true
+      prometheusSpec:
+        retention: 30d
+        storageSpec:
+          volumeClaimTemplate:
+            spec:
+              storageClassName: local-path
+              accessModes: ["ReadWriteOnce"]
+              resources:
+                requests:
+                  storage: 10Gi
+        resources:
+          requests:
+            cpu: 200m
+            memory: 400Mi
+          limits:
+            cpu: 1000m
+            memory: 2Gi
 
-    # Admin credentials
-    adminUser: admin
-    adminPassword: "${SECRET_GRAFANA_ADMIN_PASSWORD}"
+    # Alertmanager configuration
+    alertmanager:
+      enabled: true
+      alertmanagerSpec:
+        storage:
+          volumeClaimTemplate:
+            spec:
+              storageClassName: local-path
+              accessModes: ["ReadWriteOnce"]
+              resources:
+                requests:
+                  storage: 2Gi
 
-    # Timezone
-    defaultDashboardsTimezone: "Europe/Athens"
-
-    # Service configuration (ClusterIP for Gateway routing)
-    service:
-      type: ClusterIP
-      port: 80
-
-    # Ingress disabled (using HTTPRoute instead)
-    ingress:
-      enabled: false
-
-    persistentVolumeClaim:
-      enabled: false
-
-    # Resources
-    resources:
-      requests:
-        cpu: 100m
-        memory: 128Mi
-      limits:
-        cpu: 500m
-        memory: 512Mi
-
-    # Security context
-    securityContext:
-      runAsNonRoot: true
-      runAsUser: 472
-      runAsGroup: 472
-      fsGroup: 472
-
-    # Grafana configuration
-    grafana.ini:
-      server:
-        root_url: "https://prometheus-community.${SECRET_DOMAIN}"
-        serve_from_sub_path: false
-      security:
-        allow_embedding: true
-        cookie_secure: true
-        strict_transport_security: true
-      auth:
-        disable_login_form: false
-      auth.anonymous:
+    # Grafana configuration (included in the stack)
+    grafana:
+      enabled: true
+      adminPassword: "${SECRET_GRAFANA_ADMIN_PASSWORD}"
+      defaultDashboardsTimezone: "Europe/Athens"
+      service:
+        type: ClusterIP
+        port: 80
+      ingress:
         enabled: false
-      users:
-        allow_sign_up: false
-        auto_assign_org: true
-        auto_assign_org_role: Viewer
-      log:
-        level: info
+      persistence:
+        enabled: false
+      grafana.ini:
+        server:
+          root_url: "https://grafana.${SECRET_DOMAIN}"
+          serve_from_sub_path: false
+        security:
+          allow_embedding: true
+          cookie_secure: true
+        auth:
+          disable_login_form: false
+        users:
+          allow_sign_up: false
+          auto_assign_org: true
+          auto_assign_org_role: Viewer
 
-    # Default dashboards
-    defaultDashboardsEnabled: true
+    # Node Exporter
+    nodeExporter:
+      enabled: true
 
-    # Data sources (can be configured later)
-    datasources: {}
+    # Kube State Metrics
+    kubeStateMetrics:
+      enabled: true
 
-    # Dashboard providers
-    dashboardProviders: {}
+    # Prometheus Operator
+    prometheusOperator:
+      enabled: true
 
-    # Sidecar for dashboard discovery
-    sidecar:
-      dashboards:
-        enabled: true
-        searchNamespace: ALL
-      datasources:
-        enabled: true
-        searchNamespace: ALL
+    # Default rules and alerts
+    defaultRules:
+      create: true
+      rules:
+        alertmanager: true
+        etcd: true
+        configReloaders: true
+        general: true
+        k8s: true
+        kubeApiserver: true
+        kubeApiserverAvailability: true
+        kubeApiserverSlos: true
+        kubelet: true
+        kubeProxy: true
+        kubePrometheusGeneral: true
+        kubePrometheusNodeRecording: true
+        kubernetesApps: true
+        kubernetesResources: true
+        kubernetesStorage: true
+        kubernetesSystem: true
+        network: true
+        node: true
+        nodeExporterAlerting: true
+        nodeExporterRecording: true
+        prometheus: true
+        prometheusOperator: true
