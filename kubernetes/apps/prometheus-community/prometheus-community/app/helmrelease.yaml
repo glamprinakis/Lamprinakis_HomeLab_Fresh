@@ -26,14 +26,8 @@ spec:
       enabled: true
       prometheusSpec:
         retention: 30d
-        storageSpec:
-          volumeClaimTemplate:
-            spec:
-              storageClassName: local-path
-              accessModes: ["ReadWriteOnce"]
-              resources:
-                requests:
-                  storage: 10Gi
+        # Disable persistence for now
+        storageSpec: {}
         resources:
           requests:
             cpu: 200m
@@ -46,14 +40,8 @@ spec:
     alertmanager:
       enabled: true
       alertmanagerSpec:
-        storage:
-          volumeClaimTemplate:
-            spec:
-              storageClassName: local-path
-              accessModes: ["ReadWriteOnce"]
-              resources:
-                requests:
-                  storage: 2Gi
+        # Disable persistence for now
+        storage: {}
 
     # Grafana configuration (included in the stack)
     grafana:
