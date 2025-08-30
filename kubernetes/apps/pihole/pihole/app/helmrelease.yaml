@@ -37,17 +37,13 @@ spec:
     timezone: "Europe/Athens"
 
     # Service configuration
-    serviceTCP:
+    serviceDns:
       type: LoadBalancer
+      externalTrafficPolicy: Local
+      loadBalancerIP: "192.168.31.240"
       annotations:
-        io.cilium/lb-ipam-ips: "192.168.31.244"
-      port: 53
-
-    serviceUDP:
-      type: LoadBalancer
-      annotations:
-        io.cilium/lb-ipam-ips: "192.168.31.244"
-      port: 53
+        io.cilium/lb-ipam-ips: "192.168.31.240"
+      mixedService: true
 
     # Web interface
     serviceWeb:
