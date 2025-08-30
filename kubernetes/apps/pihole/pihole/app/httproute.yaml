@@ -1,11 +1,13 @@
 ---
+# yaml-language-server: $schema=https://github.com/datreeio/CRDs-catalog/raw/refs/heads/main/gateway.networking.k8s.io/httproute_v1.json
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
   name: pihole
+  annotations:
+    external-dns.alpha.kubernetes.io/target: "192.168.31.242"
 spec:
-  hostnames:
-    - "pihole.${SECRET_DOMAIN}"
+  hostnames: ["pi-hole.${SECRET_DOMAIN}"]
   parentRefs:
     - name: internal
       namespace: kube-system
@@ -14,3 +16,7 @@ spec:
     - backendRefs:
         - name: pihole-web
           port: 80
+      matches:
+        - path:
+            type: PathPrefix
+            value: /
