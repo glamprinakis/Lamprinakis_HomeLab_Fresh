@@ -58,11 +58,9 @@ spec:
     ingress:
       enabled: false
 
-    # Persistence
+    # Persistence (disabled for now - no storage class available)
     persistentVolumeClaim:
-      enabled: true
-      size: 1Gi
-      storageClass: local-hostpath
+      enabled: false
 
     # Resources
     resources:
