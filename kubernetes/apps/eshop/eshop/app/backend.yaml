@@ -41,6 +41,22 @@ spec:
         image: ghcr.io/glamprinakis/eshop-backend:202508311436
         env:
         # MySQL environment variables that your Node.js app expects (from docker-compose.yml)
+        - name: DB_HOST
+          value: mysql
+        - name: DB_USER
+          value: root
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: root-password
+        - name: DB_NAME
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: database
+        - name: MYSQL_HOST
+          value: mysql
         - name: MYSQL_ROOT_USER
           value: root
         - name: MYSQL_ROOT_PASSWORD
