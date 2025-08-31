@@ -22,7 +22,7 @@ spec:
         image: ghcr.io/glamprinakis/eshop-frontend:202508311436
         env:
         - name: REACT_APP_API_URL
-          value: "http://eshop-backend:3000"
+          value: "https://eshop-backend.glamprinakis.com"
         ports:
         - containerPort: 80
           name: http

@@ -38,7 +38,7 @@ spec:
       - name: backend
         # You'll need to build and push this image to a registry
         # For now, using a placeholder - we'll need to build from your node/ folde
-        image: ghcr.io/glamprinakis/eshop-backend:202508311436
+        image: ghcr.io/glamprinakis/eshop-backend:x86-latest
         env:
         # MySQL environment variables that your Node.js app expects (from docker-compose.yml)
         - name: DB_HOST
