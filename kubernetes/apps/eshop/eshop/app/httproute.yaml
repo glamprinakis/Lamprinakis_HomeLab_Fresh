@@ -1,0 +1,40 @@
+---
+# yaml-language-server: $schema=https://github.com/datreeio/CRDs-catalog/raw/refs/heads/main/gateway.networking.k8s.io/httproute_v1.json
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: eshop-frontend
+spec:
+  hostnames: ["eshop.${SECRET_DOMAIN}"]
+  parentRefs:
+    - name: external
+      namespace: kube-system
+      sectionName: https
+  rules:
+    - backendRefs:
+        - name: eshop-frontend
+          port: 80
+      matches:
+        - path:
+            type: PathPrefix
+            value: /
+---
+# yaml-language-server: $schema=https://github.com/datreeio/CRDs-catalog/raw/refs/heads/main/gateway.networking.k8s.io/httproute_v1.json
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: phpmyadmin
+spec:
+  hostnames: ["phpmyadmin.${SECRET_DOMAIN}"]
+  parentRefs:
+    - name: external
+      namespace: kube-system
+      sectionName: https
+  rules:
+    - backendRefs:
+        - name: phpmyadmin
+          port: 80
+      matches:
+        - path:
+            type: PathPrefix
+            value: /
