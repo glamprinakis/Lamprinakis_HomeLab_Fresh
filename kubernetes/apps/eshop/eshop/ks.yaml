@@ -13,16 +13,18 @@ spec:
     provider: sops
     secretRef:
       name: sops-age
-  dependsOn:
-    - name: common
-      namespace: common
-  interval: 10m
+  interval: 1h
   path: ./kubernetes/apps/eshop/eshop/app
+  postBuild:
+    substituteFrom:
+      - name: cluster-secrets
+        kind: Secret
   prune: true
+  retryInterval: 2m
   sourceRef:
     kind: GitRepository
-    name: flux-instance
+    name: flux-system
     namespace: flux-system
-  wait: true
-spec:
   targetNamespace: *namespace
+  timeout: 5m
+  wait: false
