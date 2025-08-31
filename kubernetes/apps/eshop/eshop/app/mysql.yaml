@@ -6,11 +6,11 @@ metadata:
 type: Opaque
 data:
   # These are base64 encoded values
-  # root-password = "admin123"
+  # root-password = "xyz123" (to match docker-compose)
   # database = "visionstudio"
   # username = "eshop_user"
   # password = "eshop_pass"
-  root-password: YWRtaW4xMjM=
+  root-password: eHl6MTIz
   database: dmlzaW9uc3R1ZGlv
   username: ZXNob3BfdXNlcg==
   password: ZXNob3BfcGFzcw==
