@@ -7,11 +7,11 @@ type: Opaque
 data:
   # These are base64 encoded values
   # root-password = "xyz123" (to match docker-compose)
-  # database = "visionstudio"
+  # database = "lamprinakis_eshop"
   # username = "eshop_user"
   # password = "eshop_pass"
   root-password: eHl6MTIz
-  database: dmlzaW9uc3R1ZGlv
+  database: bGFtcHJpbmFraXNfZXNob3A=
   username: ZXNob3BfdXNlcg==
   password: ZXNob3BfcGFzcw==
 ---
