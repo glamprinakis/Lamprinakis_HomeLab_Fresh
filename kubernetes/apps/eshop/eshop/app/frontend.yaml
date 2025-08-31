@@ -19,10 +19,10 @@ spec:
       - name: frontend
         # You'll need to build and push this image to a registry
         # For now, using a placeholder - we'll need to build from your react/ folder
-        image: ghcr.io/glamprinakis/eshop-frontend:202508311436
+        image: ghcr.io/glamprinakis/eshop-frontend:v2-x86
         env:
         - name: REACT_APP_API_URL
-          value: "https://eshop-backend.glamprinakis.com"
+          value: "/api"
         ports:
         - containerPort: 80
           name: http
