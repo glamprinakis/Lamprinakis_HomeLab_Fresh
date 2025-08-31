@@ -18,7 +18,7 @@ spec:
       containers:
       - name: backend
         # You'll need to build and push this image to a registry
-        # For now, using a placeholder - we'll need to build from your node/ folder
+        # For now, using a placeholder - we'll need to build from your node/ folde
         image: ghcr.io/glamprinakis/eshop-backend:202508311436
         env:
         - name: DB_HOST
