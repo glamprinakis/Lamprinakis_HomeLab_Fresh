@@ -41,13 +41,6 @@ spec:
             port: 80
           initialDelaySeconds: 5
           periodSeconds: 5
-        securityContext:
-          allowPrivilegeEscalation: false
-          runAsNonRoot: true
-          runAsUser: 1001
-          runAsGroup: 1001
-          capabilities:
-            drop: ["ALL"]
 ---
 apiVersion: v1
 kind: Service
