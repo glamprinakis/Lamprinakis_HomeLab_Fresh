@@ -1,0 +1,64 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: resume-site
+  labels:
+    app: resume-site
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: resume-site
+  template:
+    metadata:
+      labels:
+        app: resume-site
+    spec:
+      containers:
+      - name: resume-site
+        image: ghcr.io/glamprinakis/resume-site:a1b2c3d4e5f6
+        ports:
+        - containerPort: 80
+          name: http
+        resources:
+          requests:
+            cpu: 10m
+            memory: 32Mi
+          limits:
+            cpu: 100m
+            memory: 128Mi
+        # Health checks
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        securityContext:
+          allowPrivilegeEscalation: false
+          runAsNonRoot: true
+          runAsUser: 1001
+          runAsGroup: 1001
+          capabilities:
+            drop: ["ALL"]
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: resume-site
+  labels:
+    app: resume-site
+spec:
+  selector:
+    app: resume-site
+  ports:
+  - port: 80
+    targetPort: 80
+    name: http

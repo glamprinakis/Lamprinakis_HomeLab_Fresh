@@ -1,0 +1,20 @@
+---
+# yaml-language-server: $schema=https://github.com/datreeio/CRDs-catalog/raw/refs/heads/main/gateway.networking.k8s.io/httproute_v1.json
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: resume-site
+spec:
+  hostnames: ["resume.${SECRET_DOMAIN}"]
+  parentRefs:
+    - name: external
+      namespace: kube-system
+      sectionName: https
+  rules:
+    - backendRefs:
+        - name: resume-site
+          port: 80
+      matches:
+        - path:
+            type: PathPrefix
+            value: /
