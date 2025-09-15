@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: resume-site
-        image: ghcr.io/glamprinakis/resume-site:d9193f02fc5d
+        image: ghcr.io/glamprinakis/resume-site:a1cfc379d37f8c9d2fb9818e9a3fa8f434df7a72a2eb4234dfa846bf276f78e1
         ports:
         - containerPort: 80
           name: http
