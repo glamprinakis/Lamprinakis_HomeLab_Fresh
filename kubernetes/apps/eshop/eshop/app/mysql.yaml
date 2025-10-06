@@ -1,20 +1,4 @@
 ---
-apiVersion: v1
-kind: Secret
-metadata:
-  name: mysql-secret
-type: Opaque
-data:
-  # These are base64 encoded values
-  # root-password = "xyz123" (to match docker-compose)
-  # database = "lamprinakis_eshop"
-  # username = "eshop_user"
-  # password = "eshop_pass"
-  root-password: eHl6MTIz
-  database: bGFtcHJpbmFraXNfZXNob3A=
-  username: ZXNob3BfdXNlcg==
-  password: ZXNob3BfcGFzcw==
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
