@@ -20,6 +20,11 @@ spec:
     cleanupOnFail: true
     remediation:
       retries: 3
+  valuesFrom:
+    - kind: Secret
+      name: grafana-secret
+      valuesKey: admin-password
+      targetPath: grafana.adminPassword
   values:
     # Prometheus configuration
     prometheus:
@@ -46,7 +51,6 @@ spec:
     # Grafana configuration (included in the stack)
     grafana:
       enabled: true
-      adminPassword: "${SECRET_GRAFANA_ADMIN_PASSWORD}"
       defaultDashboardsTimezone: "Europe/Athens"
       service:
         type: ClusterIP
