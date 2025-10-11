@@ -3,10 +3,6 @@ originRequest:
   originServerName: "external.${SECRET_DOMAIN}"
 
 ingress:
-  - hostname: "k8s.${SECRET_DOMAIN}"
-    service: https://192.168.31.240:6443
-    originRequest:
-      noTLSVerify: true
   - hostname: "${SECRET_DOMAIN}"
     service: &svc https://cilium-gateway-external.kube-system.svc.cluster.local:443
   - hostname: "*.${SECRET_DOMAIN}"
