@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: my-id
-        image: ghcr.io/glamprinakis/gov-declaration:latest
+        image: ghcr.io/glamprinakis/gov-declaration:7c5f66219371
         imagePullPolicy: Always
         ports:
         - containerPort: 80
