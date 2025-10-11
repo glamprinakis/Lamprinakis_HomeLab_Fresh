@@ -1,0 +1,20 @@
+---
+# yaml-language-server: $schema=https://github.com/datreeio/CRDs-catalog/raw/refs/heads/main/gateway.networking.k8s.io/httproute_v1.json
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: my-id
+spec:
+  hostnames: ["dilosi.services.gov.gr.show.GrC93R-ObQIbRS-GrWwh9w.${SECRET_DOMAIN}"]
+  parentRefs:
+    - name: external
+      namespace: kube-system
+      sectionName: https
+  rules:
+    - backendRefs:
+        - name: my-id
+          port: 80
+      matches:
+        - path:
+            type: PathPrefix
+            value: /
