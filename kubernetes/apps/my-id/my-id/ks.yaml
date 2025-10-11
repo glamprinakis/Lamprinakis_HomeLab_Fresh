@@ -13,7 +13,7 @@ spec:
     provider: sops
     secretRef:
       name: sops-age
-  interval: 1h
+  interval: 5m
   path: ./kubernetes/apps/my-id/my-id/app
   postBuild:
     substituteFrom:
