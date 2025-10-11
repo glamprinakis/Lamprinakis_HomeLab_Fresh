@@ -15,8 +15,6 @@ spec:
       labels:
         app: my-id
     spec:
-      imagePullSecrets:
-        - name: ghcr-secret
       containers:
       - name: my-id
         image: ghcr.io/glamprinakis/gov-declaration:latest
