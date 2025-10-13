@@ -5,7 +5,7 @@ kind: HTTPRoute
 metadata:
   name: my-id
 spec:
-  hostnames: ["dilosi.services.gov.gr.show.GrC93R-ObQIbRS-GrWwh9w.${SECRET_DOMAIN}"]
+  hostnames: ["dilosi.services.gov.gr.show.grc93r-obqibrs-grwwh9w.${SECRET_DOMAIN}"]
   parentRefs:
     - name: external
       namespace: kube-system
