@@ -37,8 +37,4 @@ spec:
       # This allows the operator to manage subnet routes
       defaultTags:
         - tag:k8s
-
-    # API server proxy - this is what gives you kubectl access
-    apiServerProxyConfig:
-      mode: "true"
-      replicas: 1
+      hostname: "kubernetes-cluster"
