@@ -10,11 +10,16 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  decryption:
+    provider: sops
+    secretRef:
+      name: sops-age
   path: ./kubernetes/apps/network/tailscale/app
   prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
+    namespace: flux-system
   wait: false
   interval: 30m
   retryInterval: 1m
