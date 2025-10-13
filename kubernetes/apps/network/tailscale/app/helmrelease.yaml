@@ -40,4 +40,4 @@ spec:
 
     # API server proxy - this is what gives you kubectl access
     apiServerProxyConfig:
-      mode: true
+      mode: "true"
