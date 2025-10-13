@@ -1,0 +1,16 @@
+---
+apiVersion: tailscale.com/v1alpha1
+kind: Connector
+metadata:
+  name: subnet-router
+  namespace: network
+spec:
+  # Advertise your home network subnet through Tailscale
+  # This allows you to access 192.168.31.0/24 (including K8s API) remotely
+  subnetRouter:
+    advertiseRoutes:
+      - "192.168.31.0/24"
+
+  # Tags for the connector
+  tags:
+    - tag:k8s
