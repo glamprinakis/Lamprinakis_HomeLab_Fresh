@@ -1,0 +1,12 @@
+---
+# Create directory for OpenEBS LocalPV storage
+machine:
+  kubelet:
+    extraMounts:
+      - destination: /var/local/openebs
+        type: bind
+        source: /var/local/openebs
+        options:
+          - bind
+          - rshared
+          - rw
