@@ -56,13 +56,9 @@ spec:
     ingress:
       enabled: false
 
-    # Persistence - enabled with OpenEBS
+    # Persistence (disabled for now - no storage class available)
     persistentVolumeClaim:
-      enabled: true
-      storageClass: openebs-hostpath
-      accessModes:
-        - ReadWriteOnce
-      size: 1Gi
+      enabled: false
 
     # Resources
     resources:
