@@ -1,0 +1,69 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: openebs
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: openebs
+      version: 4.1.1
+      sourceRef:
+        kind: HelmRepository
+        name: openebs
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    # Enable only LocalPV HostPath (lightweight for single-node)
+    engines:
+      local:
+        lvm:
+          enabled: false
+        zfs:
+          enabled: false
+      replicated:
+        mayastor:
+          enabled: false
+
+    # LocalPV HostPath configuration
+    localpv-provisioner:
+      enabled: true
+      hostpathClass:
+        enabled: true
+        name: openebs-hostpath
+        isDefaultClass: true
+        basePath: /var/openebs/local
+      analytics:
+        enabled: false
+
+      # Node selector for single-node cluster
+      nodeSelector:
+        kubernetes.io/os: linux
+
+      # Resources
+      resources:
+        limits:
+          memory: 128Mi
+        requests:
+          cpu: 50m
+          memory: 64Mi
+
+    # Disable NDM (Node Disk Manager) - not needed for LocalPV HostPath
+    ndm:
+      enabled: false
+
+    ndmOperator:
+      enabled: false
+
+    # Helper pod for managing volumes
+    helper:
+      image: openebs/linux-utils
+      imageTag: 4.1.0
