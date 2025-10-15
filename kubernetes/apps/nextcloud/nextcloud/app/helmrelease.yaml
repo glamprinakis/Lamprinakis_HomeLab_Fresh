@@ -35,6 +35,21 @@ spec:
       host: nextcloud.${SECRET_DOMAIN}
       username: admin
 
+      # Trust proxy headers and configure for reverse proxy
+      configs:
+        proxy.config.php: |-
+          <?php
+          $CONFIG = array (
+            'trusted_proxies' => array(
+              0 => '10.0.0.0/8',
+              1 => '172.16.0.0/12',
+              2 => '192.168.0.0/16',
+            ),
+            'overwriteprotocol' => 'https',
+            'overwrite.cli.url' => 'https://nextcloud.${SECRET_DOMAIN}',
+            'overwritehost' => 'nextcloud.${SECRET_DOMAIN}',
+          );
+
       # PHP configuration
       phpConfigs:
         uploadLimit.ini: |
